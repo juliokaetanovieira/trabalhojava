@@ -32,6 +32,10 @@ public class ProfessorController {
 	public Professor findBySobrenome(@PathVariable String sobrenome) {
 		return professorMapService.findBySobrenome(sobrenome);
 	}
+	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
+	public Professor findById(@PathVariable Long id) {
+		return professorMapService.findById(id);
+	}
 	
 	@RequestMapping(path = "/count", method = RequestMethod.GET)
 	public int count() {
