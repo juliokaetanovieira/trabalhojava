@@ -1,12 +1,14 @@
 package br.edu.unifcv2.Faculdade.service.map;
 
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
 import br.edu.unifcv2.Faculdade.model.Professor;
 import br.edu.unifcv2.Faculdade.service.crud.ProfessorService;
+import br.edu.unifcv2.Faculdade.service.exception.RecursoNaoEncontradoException;
 
 @Service
 public class ProfessorMapService extends AbstractMapService<Professor, Long> implements ProfessorService{
@@ -15,7 +17,11 @@ public class ProfessorMapService extends AbstractMapService<Professor, Long> imp
 
 	@Override
 	public Professor findById(Long id) {
-		return super.findById(id);
+		Optional<Professor> p = Optional.ofNullable(super.findById(id));
+		if(p.isPresent())
+			return p.get();
+		throw new RecursoNaoEncontradoException("Não achei o id : " + id);
+		
 	}
 
 	@Override

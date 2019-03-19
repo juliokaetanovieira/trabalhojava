@@ -3,6 +3,7 @@ package br.edu.unifcv2.Faculdade.controller;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,8 +34,8 @@ public class ProfessorController {
 		return professorMapService.findBySobrenome(sobrenome);
 	}
 	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
-	public Professor findById(@PathVariable Long id) {
-		return professorMapService.findById(id);
+	public ResponseEntity<Professor> getProfessor(@PathVariable Long id) {
+		return ResponseEntity.ok(professorMapService.findById(id));
 	}
 	
 	@RequestMapping(path = "/count", method = RequestMethod.GET)
