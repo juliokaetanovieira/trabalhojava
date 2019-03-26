@@ -20,6 +20,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.edu.unifcv2.Faculdade.service.exception.RecursoNaoEncontradoException;
+import br.edu.unifcv2.Faculdade.service.exception.RegraDeNegocioException;
 
 
 @ControllerAdvice
@@ -55,6 +56,14 @@ public class FaculdadeExceptionHandler extends ResponseEntityExceptionHandler{
 		String mensagemDesenvolvedor = ex.toString();
 		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
 		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
+	
+	@ExceptionHandler({ RegraDeNegocioException.class })
+	public ResponseEntity<Object> handleEmptyResultDataAccessException(RegraDeNegocioException ex, WebRequest request) {
+		String mensagemUsuario = messageSource.getMessage("recurso.regra-de-negocio", null, LocaleContextHolder.getLocale());
+		String mensagemDesenvolvedor = ex.toString();
+		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
 	
 	private List<Erro> criarListaDeErros(BindingResult bindingResult) {

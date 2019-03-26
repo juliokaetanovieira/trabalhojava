@@ -26,12 +26,12 @@ public class ProfessorController {
 	}	
 	
 	@RequestMapping(path = "/nome/{nome}", method = RequestMethod.GET)
-	public Professor findByNome(@PathVariable String nome) {
-		return professorMapService.findByName(nome);
+	public ResponseEntity<Professor> getNome(@PathVariable String nome) {
+		return ResponseEntity.ok(professorMapService.findByName(nome));
 	}
 	@RequestMapping(path = "/sobrenome/{sobrenome}", method = RequestMethod.GET)
-	public Professor findBySobrenome(@PathVariable String sobrenome) {
-		return professorMapService.findBySobrenome(sobrenome);
+	public ResponseEntity<Professor> getSobrenome(@PathVariable String sobrenome) {
+		return ResponseEntity.ok(professorMapService.findBySobrenome(sobrenome));
 	}
 	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Professor> getProfessor(@PathVariable Long id) {

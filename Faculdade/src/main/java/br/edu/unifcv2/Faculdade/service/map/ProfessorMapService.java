@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.edu.unifcv2.Faculdade.model.Professor;
 import br.edu.unifcv2.Faculdade.service.crud.ProfessorService;
 import br.edu.unifcv2.Faculdade.service.exception.RecursoNaoEncontradoException;
+import br.edu.unifcv2.Faculdade.service.exception.RegraDeNegocioException;
 
 @Service
 public class ProfessorMapService extends AbstractMapService<Professor, Long> implements ProfessorService{
@@ -58,7 +59,7 @@ public class ProfessorMapService extends AbstractMapService<Professor, Long> imp
 	@Override
 	public Professor save(Professor professor) {
 		if (professor.getNome() == "") {
-			throw new RuntimeException("Nome não pode ser vazio!");
+			throw new RegraDeNegocioException("Nome não pode ser vazio!");
 		} 
 		return super.save(professor);
 	}
