@@ -4,9 +4,11 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.unifcv2.Faculdade.model.Professor;
+import br.edu.unifcv2.Faculdade.model.Telefone;
 import br.edu.unifcv2.Faculdade.service.crud.ProfessorService;
 import br.edu.unifcv2.Faculdade.service.exception.RecursoNaoEncontradoException;
 import br.edu.unifcv2.Faculdade.service.exception.RegraDeNegocioException;
@@ -14,7 +16,8 @@ import br.edu.unifcv2.Faculdade.service.exception.RegraDeNegocioException;
 @Service
 public class ProfessorMapService extends AbstractMapService<Professor, Long> implements ProfessorService{
 
-
+	@Autowired
+	TelefoneMapService TelefoneMapService;
 
 	@Override
 	public Professor findById(Long id) {
@@ -60,8 +63,18 @@ public class ProfessorMapService extends AbstractMapService<Professor, Long> imp
 	public Professor save(Professor professor) {
 		if (professor.getNome() == "") {
 			throw new RegraDeNegocioException("Nome não pode ser vazio!");
-		} 
+		}
+		if(professor.getTelefone() != null) {
+			this.save(professor);
+		}
 		return super.save(professor);
+	}
+	
+	private void saveOrUpdateTelefone(Telefone telefone) {
+		if(telefone.getId() ==  null) {
+			Telefone t = TelefoneMapService.save(telefone);
+			telefone.setId(t.getId());
+		}
 	}
 	
 	@Override

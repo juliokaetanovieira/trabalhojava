@@ -11,7 +11,7 @@ import br.edu.unifcv2.Faculdade.model.BaseEntity;
 
 public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
 
-	protected Map <Long, T> map = new HashMap<>();
+	protected Map<Long, T> map = new HashMap<>();
 
 	public Set<T> findAll() {
 		return new HashSet<>(map.values());
@@ -20,8 +20,6 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> 
 	T findById(ID id) {
 		return map.get(id);
 	}
-	
-
 
 	void deleteById(ID id) {
 		map.remove(id);

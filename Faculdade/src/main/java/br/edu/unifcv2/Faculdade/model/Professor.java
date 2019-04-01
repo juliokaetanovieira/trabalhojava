@@ -8,9 +8,18 @@ public class Professor extends Pessoa {
 	private String Periodo;
 	private int Ano;
 	private String Faculdade;
+	private Telefone telefone;
 	
 	public String getTurma() {
 		return Turma;
+	}
+	
+	public void setTurma(String turma) {
+		Turma = turma;
+	}	
+	
+	public String getPeriodo() {
+		return Periodo;
 	}
 	
 	public void setPeriodo(String periodo) {
@@ -25,14 +34,6 @@ public class Professor extends Pessoa {
 		Ano = ano;
 	}
 	
-	public void setTurma(String turma) {
-		Turma = turma;
-	}
-	
-	public String getPeriodo() {
-		return Periodo;
-	}
-	
 	public String getFaculdade() {
 		return Faculdade;
 	}
@@ -40,7 +41,14 @@ public class Professor extends Pessoa {
 	public void setFaculdade(String faculdade) {
 		Faculdade = faculdade;
 	}
+
+	public Telefone getTelefone() {
+		return telefone;
+	}
 	
+	public void setTelefone(Telefone telefone) {
+		telefone = telefone;
+	}	
 	
 	
 	
