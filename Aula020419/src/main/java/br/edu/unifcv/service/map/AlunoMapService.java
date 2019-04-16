@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.unifcv.model.Endereco;
-import br.edu.unifcv.model.Professor;
+import br.edu.unifcv.model.Aluno;
 import br.edu.unifcv.model.Telefone;
-import br.edu.unifcv.service.ProfessorService;
+import br.edu.unifcv.service.AlunoService;
 import br.edu.unifcv.service.exception.RecursoNaoEncontradoException;
 import br.edu.unifcv.service.exception.RegraDeNegocioException;
 
 @Service
-public class ProfessorMapService extends AbstractMapService<Professor, Long> implements ProfessorService {
+public class AlunoMapService extends AbstractMapService<Aluno, Long> implements AlunoService {
 
 	@Autowired
 	EnderecoMapService enderecoMapService;
@@ -26,22 +26,22 @@ public class ProfessorMapService extends AbstractMapService<Professor, Long> imp
 	TelefoneMapService TelefoneMapService;
 
 	@Override
-	public Set<Professor> getAll() {
+	public Set<Aluno> getAll() {
 		return super.findAll();
 	}
 
 	@Override
-	public Professor findById(Long id) {
-		Optional<Professor> p = Optional.ofNullable(super.findById(id));
+	public Aluno findById(Long id) {
+		Optional<Aluno> p = Optional.ofNullable(super.findById(id));
 		if (p.isPresent())
 			return p.get();
 		throw new RecursoNaoEncontradoException("Não achei o id : " + id);
 	}
 
 	@Override
-	public Professor saveOrUpdate(Professor object) {
+	public Aluno saveOrUpdate(Aluno object) {
 		if (isDadosOk(object)) {
-			Professor p = super.saveOrUpdate(object);
+			Aluno p = super.saveOrUpdate(object);
 			if (object.getTelefone() != null) {
 				object.getTelefone().setProfessor_id(p.getId());;
 				this.saveOrUpdateTelefone(object.getTelefone());
@@ -75,7 +75,7 @@ public class ProfessorMapService extends AbstractMapService<Professor, Long> imp
 
 	}
 
-	private boolean isDadosOk(Professor object) {
+	private boolean isDadosOk(Aluno object) {
 		return (!isNotEmpty(object.getNome()) && !isNotEmpty(object.getSobreNome())
 				&& isLengthValid(object.getNome(), 4) && isLengthValid(object.getNome(), 4));
 
@@ -83,7 +83,7 @@ public class ProfessorMapService extends AbstractMapService<Professor, Long> imp
 
 	
 	@Override
-	public void delete(Professor object) {
+	public void delete(Aluno object) {
 		if (object.getEndereco().size() > 0)
 			deleteEndereco(object.getEndereco());
 		if (object.getTelefone() != null)
@@ -118,15 +118,15 @@ public class ProfessorMapService extends AbstractMapService<Professor, Long> imp
 	}
 
 	@Override
-	public Professor findByNome(String nome) {
-		Professor p = map.values().stream().filter(e -> e.getNome().trim().equalsIgnoreCase(nome)).findFirst()
+	public Aluno findByNome(String nome) {
+		Aluno p = map.values().stream().filter(e -> e.getNome().trim().equalsIgnoreCase(nome)).findFirst()
 				.orElseThrow(() -> new RecursoNaoEncontradoException("Usuario não localizado: " + nome));
 		return p;
 	}
 
 	@Override
-	public Professor findBySobreNome(String sobreNome) {
-		for (Entry<Long, Professor> p : map.entrySet()) {
+	public Aluno findBySobreNome(String sobreNome) {
+		for (Entry<Long, Aluno> p : map.entrySet()) {
 			if (p.getValue().getSobreNome().trim().equalsIgnoreCase(sobreNome)) {
 				return p.getValue();
 			}

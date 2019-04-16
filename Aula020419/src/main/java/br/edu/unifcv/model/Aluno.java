@@ -2,7 +2,7 @@ package br.edu.unifcv.model;
 
 import java.util.List;
 
-public class Professor extends Pessoa {
+public class Aluno extends Pessoa {
 
 	private static final long serialVersionUID = 1L;
 

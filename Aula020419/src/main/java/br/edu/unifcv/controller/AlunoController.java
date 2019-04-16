@@ -1,5 +1,6 @@
 package br.edu.unifcv.controller;
 
+
 import java.net.URI;
 import java.util.Set;
 
@@ -12,30 +13,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.edu.unifcv.model.Professor;
-import br.edu.unifcv.service.map.ProfessorMapService;
+import br.edu.unifcv.model.Aluno;
+import br.edu.unifcv.service.map.AlunoMapService;
+
 
 @RestController
-@RequestMapping(path = "/professor")
-public class ProfessorController {
+@RequestMapping(path = "/aluno")
+public class AlunoController {
 
 	@Autowired
-	ProfessorMapService professorMapService;
+	AlunoMapService alunoMapService;
 
 	@RequestMapping
-	public Set<Professor> getAll() {
-		return professorMapService.findAll();
+	public Set<Aluno> getAll() {
+		return alunoMapService.findAll();
 	}
 
 	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Professor> getProfessor(@PathVariable Long id) {
-		return ResponseEntity.ok(professorMapService.findById(id)); 
+	public ResponseEntity<Aluno> getProfessor(@PathVariable Long id) {
+		return ResponseEntity.ok(alunoMapService.findById(id)); 
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Professor> saveProfessor(@RequestBody Professor professor) {
+	public ResponseEntity<Aluno> saveProfessor(@RequestBody Aluno aluno) {
 		
-		Professor p = professorMapService.saveOrUpdate(professor);
+		Aluno p = alunoMapService.saveOrUpdate(aluno);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(p.getId()).toUri();
 		
@@ -44,21 +46,21 @@ public class ProfessorController {
 
 
 	@RequestMapping(path = "/update", method = RequestMethod.PUT)
-	public 	ResponseEntity<Professor> updateProfessor(@RequestBody Professor professor) {
-		return ResponseEntity.ok(professorMapService.saveOrUpdate(professor));
+	public 	ResponseEntity<Aluno> updateProfessor(@RequestBody Aluno professor) {
+		return ResponseEntity.ok(alunoMapService.saveOrUpdate(professor));
 	}
 
 	@RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteProfessor(@PathVariable Long id) {
-		professorMapService.deleteById(id);
+		alunoMapService.deleteById(id);
 		return ResponseEntity.noContent().build();
 
 	}
 
 	@RequestMapping(path = "/nome/{nome}", method = RequestMethod.GET)
-	public ResponseEntity<Professor> getByName(@PathVariable String nome) {
+	public ResponseEntity<Aluno> getByName(@PathVariable String nome) {
 		try {
-			Professor p = professorMapService.findByNome(nome);
+			Aluno p = alunoMapService.findByNome(nome);
 			return ResponseEntity.ok(p);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
@@ -66,9 +68,9 @@ public class ProfessorController {
 	}
 
 	@RequestMapping(path = "/sobrenome/{sobrenome}", method = RequestMethod.GET)
-	public ResponseEntity<Professor> getBySobrenome(@PathVariable String sobrenome) {
+	public ResponseEntity<Aluno> getBySobrenome(@PathVariable String sobrenome) {
 		try {
-			Professor p = professorMapService.findBySobreNome(sobrenome);
+			Aluno p = alunoMapService.findBySobreNome(sobrenome);
 			return ResponseEntity.ok(p);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
@@ -77,7 +79,7 @@ public class ProfessorController {
 
 	@RequestMapping(path = "/registros")
 	public Long count() {
-		return professorMapService.count();
+		return alunoMapService.count();
 	}
 
 }

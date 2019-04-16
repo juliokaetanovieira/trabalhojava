@@ -23,7 +23,7 @@ import br.edu.unifcv.service.exception.RecursoNaoEncontradoException;
 import br.edu.unifcv.service.exception.RegraDeNegocioException;
 
 @ControllerAdvice
-public class FaculdadeExceptionHandler extends ResponseEntityExceptionHandler {
+public class StudentExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Autowired
 	private MessageSource messageSource;
